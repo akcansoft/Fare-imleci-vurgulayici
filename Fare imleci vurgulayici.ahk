@@ -18,9 +18,13 @@ CoordMode("Mouse", "Screen") ; Koordinat modu fare, referans ekran
 
 cap := 52 ; vurgulayıcı çapı
 seffaflik := 125
+zeminRengi := "yellow" ; zemin rengi
+solTusRengi := "red" ; sol tuş rengi
+ortaTusRengi := "00f7ff" ; orta tuş rengi
+sagTusRengi := "00ff00" ; sağ tuş rengi
 r := cap // 2 ; daire yarıçapı
 g := Gui("+E0x20 -Caption +ToolWindow +AlwaysOnTop") ; pencere
-g.BackColor := "yellow" ; pencere zemin rengi
+g.BackColor := zeminRengi ; pencere zemin rengi
 g.Show("w" cap "h" cap) ; pencereyi çap boyutunda göster
 PencereTasi() ;pencereyi taşı
 WinSetRegion("E 0-0 w" cap " h" cap, g.Hwnd) ; pencere sınırları daire
@@ -35,14 +39,17 @@ PencereTasi() {
 ;Esc::ExitApp() ; ESC tuşuyla programı kapat
 
 ;fare tuşları basıldığında zemin rengini değiştir
-~LButton:: g.BackColor := "red" ; fare sol tuşu basıldığında
-~LButton Up:: g.BackColor := "yellow" ; fare sol tuşu bırakıldığında
+~LButton:: g.BackColor := solTusRengi ; fare sol tuşu basıldığında
+~MButton:: g.BackColor := ortaTusRengi ; fare orta tuşu basıldığında
+~RButton:: g.BackColor := sagTusRengi ; fare sağ tuşu basıldığında
 
-~RButton:: g.BackColor := "00ff00" ; fare sağ tuşu basıldığında
-~RButton Up:: g.BackColor := "yellow" ; fare sağ tuşu bırakıldığında
-
-~MButton:: g.BackColor := "00f7ff" ; fare orta tuşu basıldığında
-~MButton Up:: g.BackColor := "yellow" ; fare orta tuşu bırakıldığında
+;fare tuşları bırakıldığında zemin rengini değiştir
+~LButton Up:: ; sol tuş bırakıldığında
+~MButton Up:: ; orta tuş bırakıldığında
+~RButton Up:: ; sağ tuş bırakıldığında
+{
+  g.BackColor := zeminRengi ; zemin rengini değiştir
+}
 
 ; pencere gizle/göster
 ^+F12:: ; Ctrl+Shift+F12
