@@ -1,6 +1,6 @@
 # Fare İmleci Vurgulayıcı (Mouse cursor highlighter)
 
-Bu proje, fare imlecinizi vurgulamanızı sağlayan bir AutoHotkey v2 scriptidir. Farenizin sol, orta veya sağ tuşuna bastığınızda imlecinizin etrafında bir daire belirir ve tuşun rengine göre dairenin rengi değişir. Ayrıca, fare imleci hareket ettikçe bu daire de imleci takip eder.
+Bu proje, fare imlecinizi vurgulamanızı sağlayan bir AutoHotkey v2 scriptidir. Farenizin sol, orta veya sağ tuşuna bastığınızda imlecinizin etrafında bir daire belirir ve tuşun rengine göre dairenin rengi değişir. Ayrıca, fare imleci hareket ettikçe bu daire de imleci takip eder.\
 ![Screenshot](https://github.com/akcansoft/Fare-imleci-vurgulayici/blob/main/ss.png "Screenshot")
 
 ## Özellikler
