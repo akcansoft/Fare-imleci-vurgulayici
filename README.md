@@ -15,6 +15,7 @@ Bu proje, fare imlecinizi vurgulamanızı sağlayan bir AutoHotkey v2 scriptidir
   
 - **Pencere Taşıma**: Daire şeklindeki vurgulayıcı, fare imlecinin hareketini takip eder.
 - **Pencereyi Gizleme/Gösterme**: `Ctrl + Shift + F12` tuş kombinasyonu ile vurgulayıcı pencereyi gizleyip gösterebilirsiniz.
+- **Çoklu monitör desteği**: Yeni sürümde çoklu monitör desteği eklenmiştir.
 
 ## Gereksinimler
 
@@ -23,10 +24,9 @@ Bu proje, fare imlecinizi vurgulamanızı sağlayan bir AutoHotkey v2 scriptidir
 ## Kurulum
 
 1. [AutoHotkey v2](https://www.autohotkey.com/) indirin ve kurun.
-2. Fare-imleci-vurgulayici.ahk AutoHotkey script kodunu indirin.
-3. Fare-imleci-vurgulayici.ahk` dosyasını çalıştırın.
+2. [Fare-imleci-vurgulayici.ahk](https://github.com/akcansoft/Fare-imleci-vurgulayici/blob/main/Fare%20imleci%20vurgulayici.ahk) AutoHotkey script kodunu indirin ve çift tıklayarak çalıştırın.
 
-Fare-imleci-vurgulayici.exe dosyası ile kuruluma gerek kalmadan vurgulayıcıyı çalıştırabilirisiniz.
+- [Fare imleci vurgulayici.exe](https://github.com/akcansoft/Fare-imleci-vurgulayici/blob/main/Fare%20imleci%20vurgulayici.exe) dosyası ile AutoHotkey kurulumuna gerek kalmadan vurgulayıcıyı çalıştırabilirisiniz.
 
 ## Kullanım
 
