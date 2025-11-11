@@ -1,63 +1,75 @@
-; Fare imleci vurgulayıcı
-; Mouse cursor highlighter
-; ------------------------
-; Mesut Akcan
-; 13/08/2024
+; Fare imleci vurgulayıcı (Mouse cursor highlighter)
+; v2.0
+; 11/11/2025
+; ---------------------------
 ; Mesut Akcan
 ; makcan@gmail.com
 ; akcansoft.blogspot.com
 ; mesutakcan.blogspot.com
 ; github.com/akcansoft
 ; youtube.com/mesutakcan
+;----------------------------
+; Neler yeni:
+; - Çoklu monitör desteği eklendi
+; - DPI farkındalığı eklendi
+;----------------------------
 
 #Requires AutoHotkey v2.0
-#SingleInstance Force ; tek örnek çalışsın
+#SingleInstance Force
 
-SetTimer(PencereTasi, 30) ; pencere taşı fonksiyonunu çalıştır
-CoordMode("Mouse", "Screen") ; Koordinat modu fare, referans ekran
+; DPI farkındalığını ayarla
+DllCall("SetThreadDpiAwarenessContext", "ptr", -4, "ptr")
 
-cap := 52 ; vurgulayıcı çapı
-seffaflik := 125
-zeminRengi := "yellow" ; zemin rengi
-solTusRengi := "red" ; sol tuş rengi
-ortaTusRengi := "00f7ff" ; orta tuş rengi
-sagTusRengi := "00ff00" ; sağ tuş rengi
-r := cap // 2 ; daire yarıçapı
-g := Gui("+E0x20 -Caption +ToolWindow +AlwaysOnTop") ; pencere
-g.BackColor := zeminRengi ; pencere zemin rengi
-g.Show("w" cap "h" cap) ; pencereyi çap boyutunda göster
-PencereTasi() ;pencereyi taşı
-WinSetRegion("E 0-0 w" cap " h" cap, g.Hwnd) ; pencere sınırları daire
-WinSetTransparent(seffaflik, g.Hwnd) ; pencereyi şeffaf yap
+SetTimer(PencereTasi, 30) ; Pencere taşıma fonksiyonunu başlat
+CoordMode("Mouse", "Screen") ; Fare koordinatlarını ekran referansına ayarla
 
-; Pencere taşıma fonksiyonu
+; ------ Ayarlar ----------
+cap := 52 ; Vurgulayıcı çapı
+seffaflik := 130 ; Şeffaflık değeri
+zeminRengi := "yellow" ; Zemin rengi
+solTusRengi := "red" ; Sol tuş rengi
+ortaTusRengi := "00f7ff" ; Orta tuş rengi
+sagTusRengi := "00ff00" ; Sağ tuş rengi
+;--------------------------
+r := cap // 2 ; Vurgu yarıçap değeri
+
+; GUI oluştur
+g := Gui("+E0x20 -Caption +ToolWindow +AlwaysOnTop +Owner -DPIScale") ; DPI ölçeklemesini devre dışı bırak
+g.MarginX := 0 ; Sol kenar boşluğu
+g.MarginY := 0 ; Üst kenar boşluğu
+g.BackColor := zeminRengi ; Zemin rengini ayarla
+g.Show("NA w" cap " h" cap) ; Pencereyi gösterme, boyut ayarla
+
+; Daire şeklinde bölge oluştur
+WinSetRegion("E 0-0 w" cap " h" cap, g.Hwnd) ; Daire şeklinde pencere bölgesi oluştur
+WinSetTransparent(seffaflik, g.Hwnd) ; Pencereyi şeffaf yap
+
+; Pencere taşı
 PencereTasi() {
-  MouseGetPos &x, &y ; fare konumunu al
-  g.Move(x - r, y - r) ; pencereyi fare konumunun r piksel sol-üstüne taşı
+	MouseGetPos &x, &y ; Fare konumunu al
+	g.Move(x - r, y - r) ; Pencereyi fare konumunun yarıçap kadar sol üstüne taşı
 }
 
-;Esc::ExitApp() ; ESC tuşuyla programı kapat
+; Fare tuş olayları
+~LButton:: g.BackColor := solTusRengi ; Sol tuş rengi
+~MButton:: g.BackColor := ortaTusRengi ; Orta tuş rengi
+~RButton:: g.BackColor := sagTusRengi ; Sağ tuş rengi
 
-;fare tuşları basıldığında zemin rengini değiştir
-~LButton:: g.BackColor := solTusRengi ; fare sol tuşu basıldığında
-~MButton:: g.BackColor := ortaTusRengi ; fare orta tuşu basıldığında
-~RButton:: g.BackColor := sagTusRengi ; fare sağ tuşu basıldığında
-
-;fare tuşları bırakıldığında zemin rengini değiştir
-~LButton Up:: ; sol tuş bırakıldığında
-~MButton Up:: ; orta tuş bırakıldığında
-~RButton Up:: ; sağ tuş bırakıldığında
+~LButton Up:: ; Sol tuş bırakıldığında
+~MButton Up:: ; Orta tuş bırakıldığında
+~RButton Up:: ; Sağ tuş bırakıldığında
 {
-  g.BackColor := zeminRengi ; zemin rengini değiştir
+	g.BackColor := zeminRengi ; Zemin rengini geri yükle
 }
 
-; pencere gizle/göster
-^+F12:: ; Ctrl+Shift+F12
-{
-  static p := true
-  p := !p ; tersini al
-  if p ; p true ise
-    g.Show ; pencereyi göster
-  else ; değilse
-    g.Hide ; pencereyi gizle
+; Pencere gizle/göster
+^+F12:: {
+	static p := true
+	p := !p ; Durumu tersine çevir
+	if p { 
+		g.Show("NA") ; Pencereyi göster ama odaklama
+		WinSetTransparent(seffaflik, g.Hwnd)
+	} else { 
+		g.Hide() ; Pencereyi gizle
+	}
 }
